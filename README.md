@@ -55,4 +55,6 @@
     <li>Remove punctuation from each token.</li>
     <li>Filter out remaining tokens that are not alphabetic.</li>
     <li>Filter out tokens that are stop words.</li>
+    <li>Filter out stem words.</li>
+    <li>Convert the stem list into string and put in the file.</li>
 </ol>
