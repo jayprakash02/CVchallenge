@@ -5,6 +5,7 @@
     <h4>Text Cleaning Is Task Specific</h4>
     <p>After actually getting a hold of your text data, the first step in cleaning up text data is to have a strong idea about what you’re trying to achieve, and in that context review your text to see what exactly might help.</p> 
     <p><strong>Here’s what I see:</strong></p>
+    <ul>
     <li>
         It’s plain text so there is no markup to parse (yay!).
     </li>
@@ -32,6 +33,7 @@
     <li>
         There are section markers (e.g. “II” and “III”), and we have removed the first “I”.
     </li>
+    </ul>
     <h4>INSTALLATION</h4>
     <p>STEP 1:<strong><code>pip install -r requirements.txt</code></strong></p>
     <p>After installation, you will need to install the data used with the library, including a great set of documents
@@ -45,4 +47,12 @@
     <p>Fill the feilds and create superuser</p>
     <p>STEP 5: All set Create Server<br><strong><code>python manage.py runserver</code></strong><br>Open the localHost
     </p>
-    
+<h5>Let’s demonstrate this with a small pipeline of text preparation including:</h5>
+<ol>
+    <li>Load the raw text.</li>
+    <li>Split into tokens.</li>
+    <li>Convert to lowercase.</li>
+    <li>Remove punctuation from each token.</li>
+    <li>Filter out remaining tokens that are not alphabetic.</li>
+    <li>Filter out tokens that are stop words.</li>
+</ol>
