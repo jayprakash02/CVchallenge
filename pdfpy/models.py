@@ -16,36 +16,40 @@ from django.core.files.base import ContentFile
 class Collector(models.Model):
     id = models.IntegerField(primary_key=True)
     pdf_file = models.FileField(upload_to='Document/%Y/%m/%d/')
-    
-    #overloading _save()
-    def save(self,*args,**kwargs):       
-        pfile = self.pdf_file
-    
-        pdfStr = " "
-        pdfFileObj = pfile.open()
-        #reading PDF
-        pdfReader = PyPDF2.PdfFileReader(pdfFileObj)
-        #Extracting Text
-        for i in range(pdfReader.numPages):
-            pageObj = pdfReader.getPage(i)
-            pdfStr += pageObj.extractText()
-        pdfFileObj.close()
-        #stop_words Initializing
-        stop_words = set(stopwords.words('english'))
-        #tokenizing words for processing
-        tokens = word_tokenize(pdfStr)
-        tokens = [w.lower() for w in tokens]
-        #removing puntuations
-        table = str.maketrans('', '', string.punctuation)
-        stripped = [w.translate(table) for w in tokens]
-        words = [word for word in stripped if word.isalpha()]        
-        words = [w for w in words if not w in stop_words]
-        #stemming of words
-        porter = PorterStemmer()
-        stemmed = [porter.stem(word) for word in words]
-        #creating a final string from list
-        final = ' '.join([str(elem) for elem in stemmed])
-        #saving the final into pfile and replacing pdf
-        pfile.save('apigen.csv', ContentFile(final))
 
+    def savefile(self,string=""):
+        self.pdf_file.save('apigen.csv', ContentFile(string))
+
+    #overloading _save()
+    def save(self,*args,**kwargs):
+        pdfStr = " "
+        pdfFileObj = self.pdf_file.open('r')
+        #Reading PDF
+        try:
+            pdfReader = PyPDF2.PdfFileReader(pdfFileObj)
+        #Extracting Text
+            for i in range(pdfReader.numPages):
+                pageObj = pdfReader.getPage(i)
+                pdfStr += pageObj.extractText()
+        
+            #stop_words Initializing
+            stop_words = set(stopwords.words('english'))
+            #tokenizing words for processing
+            tokens = word_tokenize(pdfStr)
+            tokens = [w.lower() for w in tokens]
+            #removing puntuations
+            table = str.maketrans('', '', string.punctuation)
+            stripped = [w.translate(table) for w in tokens]
+            words = [word for word in stripped if word.isalpha()]
+            words = [w for w in words if not w in stop_words]
+            #stemming of words
+            porter = PorterStemmer()
+            stemmed = [porter.stem(word) for word in words]
+            #creating a final string from list
+            final = ' '.join([str(elem) for elem in stemmed])
+            #saving the final into pfile and replacing pdf
+            self.savefile(final)
+        except IOError:        
+            pdfFileObj.close()
+            self.pdf_file.close()
         super(Collector,self).save(*args,**kwargs)
