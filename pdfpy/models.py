@@ -15,7 +15,7 @@ from django.core.files.base import ContentFile
 #Main Model
 class Collector(models.Model):
     id = models.IntegerField(primary_key=True)
-    pdf_file = models.FileField(upload_to='')
+    pdf_file = models.FileField(upload_to='Document/%Y/%m/%d/')
     
     #overloading _save()
     def save(self,*args,**kwargs):       
