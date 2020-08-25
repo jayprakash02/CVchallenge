@@ -12,10 +12,9 @@ from django.core.files.base import ContentFile
 class Collector(models.Model):
     id = models.IntegerField(primary_key=True)
     pdf_file = models.FileField(upload_to='')
-    csv_file = models.FileField(upload_to='')
-
+    
     def save(self,*args,**kwargs):
-        cfile = self.csv_file
+       
         pfile = self.pdf_file
         
         pdfStr = " "
@@ -24,8 +23,8 @@ class Collector(models.Model):
         for i in range(pdfReader.numPages):
             pageObj = pdfReader.getPage(i)
             pdfStr += pageObj.extractText()
+            
         pdfFileObj.close()
-
         stop_words = set(stopwords.words('english'))
 
         tokens = word_tokenize(pdfStr)
@@ -43,7 +42,6 @@ class Collector(models.Model):
         final = ' '.join([str(elem) for elem in stemmed])
 
         
-        cfile.save('apigen.csv', ContentFile(final))
+        pfile.save('apigen.csv', ContentFile(final))
 
-        
         super(Collector,self).save(*args,**kwargs)
