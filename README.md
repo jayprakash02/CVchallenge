@@ -1,4 +1,4 @@
-<h2>DjangoAPI:Converting PDF text into CSV for ML Processing</h2>
+<h2>DjangoAPI:Converting PDF text into JSON for ML Processing</h2>
     <p>You cannot go straight from raw text to fitting a machine learning or deep learning model.</p>
     <p>  You must clean your text first, which means splitting it into words and handling punctuation and case.</p>        
     <p>   In fact, there is a whole suite of text preparation methods that you may need to use, and the choice of methods really depends on your natural language processing task.</p>
