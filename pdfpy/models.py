@@ -20,7 +20,7 @@ class Collector(models.Model):
     pdf_file = models.FileField(upload_to='Document/%Y/%m/%d/Collector')
 
     def savefile(self,string=""):
-        self.pdf_file.save('apigen.json', ContentFile(string))
+        self.pdf_file.save('apigen.csv', ContentFile(string))
 
     #overloading _save()
     def save(self,*args,**kwargs):
