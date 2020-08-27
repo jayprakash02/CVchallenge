@@ -1,7 +1,7 @@
-    <h2>DjangoAPI:Converting PDF text into JSON for ML Processing</h2>
+<h1>DjangoAPI:Converting PDF text into JSON for ML Processing</h1>
     <p>You cannot go straight from raw text to fitting a machine learning or deep learning model.</p>
-    <p>  You must clean your text first, which means splitting it into words and handling punctuation and case.</p>        
-    <p>   In fact, there is a whole suite of text preparation methods that you may need to use, and the choice of methods really depends on your natural language processing task.</p>
+    <p>You must clean your text first, which means splitting it into words and handling punctuation and case.</p>        
+    <p>In fact, there is a whole suite of text preparation methods that you may need to use, and the choice of methods really depends on your natural language processing task.</p>
     <h4>Text Cleaning Is Task Specific</h4>
     <p>After actually getting a hold of your text data, the first step in cleaning up text data is to have a strong idea about what you’re trying to achieve, and in that context review your text to see what exactly might help.</p> 
     <p><strong>Here’s what I see:</strong></p>
