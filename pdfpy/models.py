@@ -58,30 +58,20 @@ class Collector(models.Model):
         super(Collector,self).save(*args,**kwargs)
 
 class Display(models.Model):
-    mostcommon = models.IntegerField()
-    freq_csv = models.FileField(upload_to='Document/%Y/%m/%d/Counter/')
+    id = models.IntegerField(primary_key=True)
+    mostcommon = models.CharField(max_length=10)
     
-    def savefile(self,string=""):
-        try:
-            self.freq_csv.save('freq.json', ContentFile(string))
-        except IOError:
-            self.freq_csv.close()
-
-    def save(self,*args,**kwargs):
-        try:
-            temp = {}
-            data = ""
-            coll = Collector.objects.all()
-            for obj in coll:
-                f = obj.pdf_file.open('r')
-                temp = json.load(f)
-                data += json.dumps(temp)
-                f.close()
-            split_it = data.split()
-            counter = Counter(split_it)
-            most_occur = counter.most_common(self.mostcommon)
-            final = json.dumps(most_occur)
-            self.savefile(final)
-        except IOError:            
-            self.freq_csv.close()
-        super(Collector,self).save(*args,**kwargs)
+    def save(self,*args,**kwargs):        
+        temp = {}
+        data = ""
+        coll = Collector.objects.all()
+        for obj in coll:
+            f = obj.pdf_file.open('r')
+            temp = json.load(f)
+            data += json.dumps(temp)
+            f.close()
+        split_it = data.split()
+        counter = Counter(split_it)
+        most_occur = counter.most_common(int(self.mostcommon))
+        self.mostcommon=most_occur
+        super(Display,self).save(*args,**kwargs)
