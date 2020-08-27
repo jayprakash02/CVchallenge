@@ -2,3 +2,4 @@
 *.pyc
 media/
 pdfpy/migrations/
+db.sqlite3
